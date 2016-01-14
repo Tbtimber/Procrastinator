@@ -24,6 +24,15 @@
         <activity android:name=".SplashScreenActivity">
 
         </activity>
+        <activity android:name=".TrackedActivity">
+
+        </activity>
+        <activity android:name=".Result_Activity">
+
+        </activity>
+        <activity android:name=".DetailSearchActivity">
+
+        </activity>
     </application>
 
 </manifest>
