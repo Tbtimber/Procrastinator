@@ -1,5 +1,7 @@
 package com.procrastinator.isen.procrastinator.imdbRetrieval;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -90,5 +92,16 @@ public class IMDbSearchHelper {
             Log.e("ERROR", e.getMessage(), e);
             return null;
         }
+    }
+    public static Bitmap getSearchResultImage(String imageUrl) throws Exception {
+        final HttpURLConnection connection = getHttpURLConnection(imageUrl);
+        final int responseCode = connection.getResponseCode();
+
+        // If success
+        if (responseCode == 200) {
+            final Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
+            return bitmap;
+        }
+        return null;
     }
 }

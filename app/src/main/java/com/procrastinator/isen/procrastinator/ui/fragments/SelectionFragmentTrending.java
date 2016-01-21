@@ -13,7 +13,10 @@ import android.view.ViewGroup;
 import com.procrastinator.isen.procrastinator.ProcrastinatorApplication;
 import com.procrastinator.isen.procrastinator.R;
 import com.procrastinator.isen.procrastinator.adapters.SelectionAdapterView;
+import com.procrastinator.isen.procrastinator.imdbRetrieval.GetSearchResultsAsync;
+import com.procrastinator.isen.procrastinator.imdbRetrieval.SearchResult;
 import com.procrastinator.isen.procrastinator.interfaces.MainActivityListener;
+import com.procrastinator.isen.procrastinator.interfaces.SelectionListener;
 import com.procrastinator.isen.procrastinator.pojo.Movie;
 
 import java.util.ArrayList;
@@ -22,8 +25,10 @@ import java.util.List;
 /**
  * Created by Matthieu on 21/01/2016.
  */
-public class SelectionFragmentTrending extends android.support.v4.app.Fragment {
+public class SelectionFragmentTrending extends android.support.v4.app.Fragment implements SelectionListener{
     private RecyclerView mTrendingView;
+    private GetSearchResultsAsync mAsyncTask;
+
 
     private MainActivityListener mListener;
     @Override
@@ -36,26 +41,29 @@ public class SelectionFragmentTrending extends android.support.v4.app.Fragment {
 
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAsyncTask = new GetSearchResultsAsync(this);
+        mAsyncTask.execute("jones");
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_selection_trending, container, false);
 
-        List<Movie> ms= new ArrayList<>();
-        for(int i=0; i< 10;i++) {
-            Movie m = new Movie();
-            m.title = "Titre" + Integer.toString(i);
-            ms.add(m);
-        }
-
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(ProcrastinatorApplication.getContext(), LinearLayoutManager.HORIZONTAL, false);
         mTrendingView = (RecyclerView) rootView.findViewById(R.id.selectionTrendingListView);
         mTrendingView.setLayoutManager(layoutManager2);
-        final SelectionAdapterView adapterView = new SelectionAdapterView(getActivity(), ms);
-        mTrendingView.setAdapter(adapterView);
-
-
 
         return rootView;
+    }
+
+    @Override
+    public void onSelectionRetrieved(List<SearchResult> results) {
+        final SelectionAdapterView adapterView = new SelectionAdapterView(getActivity(), results);
+        mTrendingView.setAdapter(adapterView);
     }
 }

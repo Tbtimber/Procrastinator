@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by Matthieu on 21/01/2016.
  */
-public interface MainActivityListener {
-    void printScreen(List<SearchResult> results);
+public interface SelectionListener {
+    void onSelectionRetrieved(List<SearchResult> results);
 }

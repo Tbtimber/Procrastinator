@@ -14,14 +14,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.procrastinator.isen.procrastinator.imdbRetrieval.SearchResult;
 import com.procrastinator.isen.procrastinator.interfaces.MainActivityListener;
 import com.procrastinator.isen.procrastinator.ui.fragments.SelectionFragment;
 import com.procrastinator.isen.procrastinator.ui.fragments.SelectionFragmentTrending;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityListener, View.OnClickListener{
 
     private android.support.v4.app.Fragment selectionAdaptedFrag;
     private android.support.v4.app.Fragment selectionTrendingFrag;
+
+    @Override
+    public void printScreen(List<SearchResult> results) {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
