@@ -12,8 +12,9 @@
     tools:context="com.procrastinator.isen.procrastinator.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World! bonjour !" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:id="@+id/image"/>
 </RelativeLayout>

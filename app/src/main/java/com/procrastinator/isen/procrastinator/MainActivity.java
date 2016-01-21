@@ -8,12 +8,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.procrastinator.isen.procrastinator.imdbRetrieval.DownloadImageAsyncTask;
 import com.procrastinator.isen.procrastinator.imdbRetrieval.GetSearchResultsAsync;
 import com.procrastinator.isen.procrastinator.imdbRetrieval.IMDbSearchHelper;
+import com.procrastinator.isen.procrastinator.imdbRetrieval.ImageMemoryCache;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static ImageView imageView;
+    public static ImageMemoryCache mImageMemoryCache;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // Instantiate our cache
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 16;
+        mImageMemoryCache = new ImageMemoryCache(cacheSize);
+
+        imageView = (ImageView) findViewById(R.id.image);
+        DownloadImageAsyncTask getImageAsync = new DownloadImageAsyncTask(imageView,mImageMemoryCache);
+        getImageAsync.execute("http://ia.media-imdb.com/images/M/MV5BNjg3NjMxNTY0MF5BMl5BanBnXkFtZTcwMzM5NTUyMQ@@._V1_SX300.jpg");
+
     }
 
     @Override

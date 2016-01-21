@@ -1,5 +1,7 @@
 package com.procrastinator.isen.procrastinator.imdbRetrieval;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -26,7 +28,7 @@ public class IMDbSearchHelper {
     public static List<SearchResult> getSearchResultsByTitle(String title) {
         String results = "";
         List<SearchResult> resultList = new ArrayList<>();
-        HttpURLConnection urlConnection= getHttpURLConnection(API_URL + "s=" + title);
+        HttpURLConnection urlConnection = getHttpURLConnection(API_URL + "s=" + title);
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
@@ -36,14 +38,14 @@ public class IMDbSearchHelper {
             }
             bufferedReader.close();
             results = stringBuilder.toString();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         try {
             JSONObject jo = new JSONObject(results);
             JSONArray ja = jo.getJSONArray("Search");
-            for (int i = 0; i < ja.length(); i++){
-                String specificTitle = ((JSONObject)ja.get(i)).getString("Title");
+            for (int i = 0; i < ja.length(); i++) {
+                String specificTitle = ((JSONObject) ja.get(i)).getString("Title");
                 resultList.add(getDetailedSearchResult(specificTitle));
             }
             int i = 2 + 3;
@@ -68,7 +70,7 @@ public class IMDbSearchHelper {
             }
             bufferedReader.close();
             result = stringBuilder.toString();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         try {
@@ -85,10 +87,22 @@ public class IMDbSearchHelper {
         try {
             URL url = new URL(urlString);
             return (HttpURLConnection) url.openConnection();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e("ERROR", e.getMessage(), e);
             return null;
         }
+    }
+
+
+    public static Bitmap getSearchResultImage(String imageUrl) throws Exception {
+        final HttpURLConnection connection = getHttpURLConnection(imageUrl);
+        final int responseCode = connection.getResponseCode();
+
+        // If success
+        if (responseCode == 200) {
+            final Bitmap bitmap = BitmapFactory.decodeStream(connection.getInputStream());
+            return bitmap;
+        }
+        return null;
     }
 }
