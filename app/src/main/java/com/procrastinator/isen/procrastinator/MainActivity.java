@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.procrastinator.isen.procrastinator.imdbRetrieval.GetSearchResultsAsync;
+import com.procrastinator.isen.procrastinator.imdbRetrieval.IMDbSearchHelper;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        new GetSearchResultsAsync().execute();
     }
 
     @Override

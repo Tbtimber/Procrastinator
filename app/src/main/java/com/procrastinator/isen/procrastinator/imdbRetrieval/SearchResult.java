@@ -1,10 +1,12 @@
 package com.procrastinator.isen.procrastinator.imdbRetrieval;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.internal.Streams;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 /**
  * Created by Tristan on 1/21/2016.
@@ -54,13 +56,13 @@ public class SearchResult {
     public String posterURL;
 
     @SerializedName("Metascore")
-    public double metascore;
+    public String metascore;
 
     @SerializedName("imdbRating")
-    public double rating;
+    public String rating;
 
     @SerializedName("imdbVotes")
-    public long numVotes;
+    public String numVotes;
 
     @SerializedName("imdbID")
     public String id;

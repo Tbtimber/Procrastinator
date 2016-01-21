@@ -1,8 +1,19 @@
 package com.procrastinator.isen.procrastinator.imdbRetrieval;
 
-import org.json.JSONArray;
+import android.util.Log;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,23 +21,74 @@ import java.util.List;
  */
 public class IMDbSearchHelper {
 
-    public List<SearchResult> getSearchResultsByTitles() {
-        //TODO: Implement
+    static final String API_URL = "http://www.omdbapi.com/?";
+
+    public static List<SearchResult> getSearchResultsByTitle(String title) {
+        String results = "";
+        List<SearchResult> resultList = new ArrayList<>();
+        HttpURLConnection urlConnection= getHttpURLConnection(API_URL + "s=" + title);
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+            bufferedReader.close();
+            results = stringBuilder.toString();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        try {
+            JSONObject jo = new JSONObject(results);
+            JSONArray ja = jo.getJSONArray("Search");
+            for (int i = 0; i < ja.length(); i++){
+                String specificTitle = ((JSONObject)ja.get(i)).getString("Title");
+                resultList.add(getDetailedSearchResult(specificTitle));
+            }
+            int i = 2 + 3;
+            String s = String.valueOf(i);
+            return resultList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    public SearchResult getDetailedSearchResult() {
-        //TODO: Implement
+    public static SearchResult getDetailedSearchResult(String title) {
+        String result = "";
+        title = title.replace(" ", "+");
+        HttpURLConnection urlConnection = getHttpURLConnection(API_URL + "t=" + title);
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line).append("\n");
+            }
+            bufferedReader.close();
+            result = stringBuilder.toString();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        try {
+            JSONObject jo = new JSONObject(result);
+            return new Gson().fromJson(jo.toString(), SearchResult.class);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    public List<String> getSearchResultNamesByTitle() {
-        //TODO: Implement
-        return null;
-    }
+    private static HttpURLConnection getHttpURLConnection(String urlString) {
 
-    public HttpURLConnection getHttpURLConnection() {
-        //TODO: Implement
-        return null;
+        try {
+            URL url = new URL(urlString);
+            return (HttpURLConnection) url.openConnection();
+        }
+        catch (Exception e) {
+            Log.e("ERROR", e.getMessage(), e);
+            return null;
+        }
     }
 }

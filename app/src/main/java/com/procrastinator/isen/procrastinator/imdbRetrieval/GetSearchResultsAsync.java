@@ -8,6 +8,6 @@ import android.os.AsyncTask;
 public class GetSearchResultsAsync extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
-        return null;
+        return IMDbSearchHelper.getSearchResultsByTitle("Django");
     }
 }
