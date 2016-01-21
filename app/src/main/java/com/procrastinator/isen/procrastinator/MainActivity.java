@@ -1,5 +1,9 @@
 package com.procrastinator.isen.procrastinator;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,8 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.procrastinator.isen.procrastinator.interfaces.MainActivityListener;
+import com.procrastinator.isen.procrastinator.ui.fragments.SelectionFragment;
+import com.procrastinator.isen.procrastinator.ui.fragments.SelectionFragmentTrending;
+
+public class MainActivity extends AppCompatActivity implements MainActivityListener, View.OnClickListener{
+
+    private android.support.v4.app.Fragment selectionAdaptedFrag;
+    private android.support.v4.app.Fragment selectionTrendingFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +36,43 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+
+        selectionAdaptedFrag = new SelectionFragment();
+        selectionTrendingFrag = new SelectionFragmentTrending();
+        if(savedInstanceState == null) {
+            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+
+            android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+
+            transaction.add(R.id.selecteed_fragment_layout, selectionAdaptedFrag, "frag_selected");
+            transaction.add(R.id.trending_fragment_layout, selectionTrendingFrag, "frag_trending");
+
+            transaction.commit();
+            //getFragmentManager().beginTransaction().add(R.id.selecteed_fragment_layout, selectionAdaptedFrag).commit();
+            //getFragmentManager().beginTransaction().add(R.id.trending_fragment_layout, selectionTrendingFrag).commit();
+
+        }
+
+
+
+
+        Button b = (Button) findViewById(R.id.button_search);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Result_Activity.class);
+                startActivity(intent);
+            }
+        });
+        Button b2 = (Button) findViewById(R.id.button_search_more);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), DetailSearchActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -48,5 +97,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
     }
 }

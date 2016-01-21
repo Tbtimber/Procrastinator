@@ -1,9 +1,10 @@
 package com.procrastinator.isen.procrastinator;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+
 
 /**
  * Created by Matthieu on 14/01/2016.
  */
-public class DetailSearchActivity extends AppCompatActivity {
+public class DetailSearchActivity extends Activity {
 }
