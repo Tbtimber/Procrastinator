@@ -6,7 +6,7 @@
     <dimen name="size_text_search">200dp</dimen>
     <dimen name="size_margin_search">15dp</dimen>
     <dimen name="size_text_small">10dp</dimen>
-    <dimen name="size_of_poster_height"> 160dp </dimen>
+    <dimen name="size_of_poster_height"> 148dp </dimen>
     <dimen name="size_of_poster_width"> 100dp </dimen>
     <dimen name="padding"> 5dp </dimen>
     <dimen name="padding2"> 10dp </dimen>

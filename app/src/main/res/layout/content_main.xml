@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,23 +11,31 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.procrastinator.isen.procrastinator.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:orientation="vertical"
     android:id="@+id/main_activity_layout"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:isScrollContainer="true"
+    >
 
 
-    <include layout="@layout/search_bar"/>
+    <include layout="@layout/search_bar"
+        android:id="@+id/bar_recherche"/>
 
     <FrameLayout
         android:id="@+id/selecteed_fragment_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="190dp"
+        android:layout_below="@id/bar_recherche"
+        >
+
 
     </FrameLayout>
+
     <FrameLayout
         android:id="@+id/trending_fragment_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp"
+        android:layout_below="@id/selecteed_fragment_layout"
+        android:layout_alignParentBottom="true">
 
     </FrameLayout>
-</LinearLayout>
+</RelativeLayout>
