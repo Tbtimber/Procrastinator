@@ -10,7 +10,7 @@ import java.util.Locale;
  * Created by Tristan on 1/21/2016.
  */
 
-public class Film {
+public class SearchResult {
     @SerializedName("Title")
     public String title;
 
