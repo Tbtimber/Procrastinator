@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.procrastinator.isen.procrastinator.imdbRetrieval.SearchResult;
 import com.procrastinator.isen.procrastinator.interfaces.MainActivityListener;
@@ -72,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Result_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("searchString",( (EditText) findViewById(R.id.editText_search)).getText().toString());
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

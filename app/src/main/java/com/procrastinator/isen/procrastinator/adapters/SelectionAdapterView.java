@@ -26,6 +26,8 @@ import java.util.List;
  */
 public class SelectionAdapterView extends RecyclerView.Adapter<SelectionAdapterView.ViewHolder> {
     private ImageMemoryCache mMemoryCache;
+    private List<SearchResult> mMovies;
+    private LayoutInflater mInflater;
     @Override
     public SelectionAdapterView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.selection_layout, parent, false);
@@ -50,9 +52,6 @@ public class SelectionAdapterView extends RecyclerView.Adapter<SelectionAdapterV
     public int getItemCount() {
         return mMovies.size();
     }
-
-    private List<SearchResult> mMovies;
-    private LayoutInflater mInflater;
 
     public SelectionAdapterView(Context context, List<SearchResult> movies) {
         mMovies = movies;
